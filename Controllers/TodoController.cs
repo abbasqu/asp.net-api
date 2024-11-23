@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using test_api_dotnet.Models;
@@ -9,25 +10,25 @@ namespace test_api_dotnet.Controllers;
 public class TodoController : ControllerBase
 {
     private readonly MyDbContext _context;
-    public TodoController(MyDbContext context)
+    private readonly IMapper _mapper;
+
+    public TodoController(MyDbContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpGet()]
-    public async Task<IEnumerable<TodoItem>> Get()
+    public async Task<IEnumerable<TodoItemGetDto>> Get()
     {
-        return await _context.TodoItems.ToListAsync();
+        var data = await _context.TodoItems.ToListAsync();
+        return _mapper.Map<IEnumerable<TodoItemGetDto>>(data);
     }
 
     [HttpPost()]
     public async Task<IActionResult> Create(TodoItemCreateDto item)
     {
-        var newTodo = new TodoItem
-        {
-            Name = item.Name,
-            IsComplete = false
-        };
+        var newTodo = _mapper.Map<TodoItem>(item);
 
         _context.TodoItems.Add(newTodo);
         await _context.SaveChangesAsync();
@@ -42,7 +43,9 @@ public class TodoController : ControllerBase
         {
             return NotFound();
         }
-        todoItem.Name = item.Name;
+
+        _mapper.Map(item, todoItem);
+
         await _context.SaveChangesAsync();
         return Ok("Update");
     }
@@ -55,7 +58,9 @@ public class TodoController : ControllerBase
         {
             return NotFound();
         }
-        todoItem.IsComplete = item.IsComplete;
+
+        _mapper.Map(item, todoItem);
+
         await _context.SaveChangesAsync();
         return Ok("ChangeStatus");
     }
@@ -77,11 +82,23 @@ public class TodoController : ControllerBase
 public class TodoItemCreateDto
 {
     public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+
 }
 
 public class TodoItemUpdateDto
 {
     public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+
+}
+
+public class TodoItemGetDto
+{
+    public long Id { get; set; }
+    public string? Name { get; set; }
+    public bool IsComplete { get; set; }
+    public string? Description { get; set; }
 }
 
 public class TodoItemChangeStatusDto
