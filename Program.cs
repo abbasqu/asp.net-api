@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using test_api_dotnet.Models;
 
@@ -13,6 +14,15 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<MyDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = false;
+});
 
 var app = builder.Build();
 
@@ -31,7 +41,9 @@ app.UseSwaggerUI((config) =>
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+// app.UseAuthentication();
 
+app.MapIdentityApi<IdentityUser>();
 app.MapControllers();
 
 app.Run();

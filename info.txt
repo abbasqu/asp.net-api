@@ -2,9 +2,11 @@
 change db to sql (sqlite)
 activate migrations
 model + dto and mapper
-authentication + authorization
+authentication + authorization !
 
 https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
 https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/
 https://www.nuget.org/packages/microsoft.entityframeworkcore.design/
 https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/managing?tabs=dotnet-core-cli
+https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-9.0
+https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore

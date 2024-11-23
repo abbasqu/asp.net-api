@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using test_api_dotnet.Models;
@@ -26,6 +27,7 @@ public class TodoController : ControllerBase
     }
 
     [HttpPost()]
+    [Authorize]
     public async Task<IActionResult> Create(TodoItemCreateDto item)
     {
         var newTodo = _mapper.Map<TodoItem>(item);
