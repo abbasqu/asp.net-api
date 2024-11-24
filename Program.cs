@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddAuthorization();
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+builder.Services.AddIdentityApiEndpoints<AppUser>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<MyDbContext>();
 
@@ -44,7 +44,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 // app.UseAuthentication();
 
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<AppUser>();
 app.MapControllers();
 
 app.Run();

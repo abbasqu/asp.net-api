@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace test_api_dotnet.Models;
 
-public class MyDbContext : IdentityDbContext<IdentityUser>
+public class MyDbContext : IdentityDbContext<AppUser>
 {
     public MyDbContext(DbContextOptions<MyDbContext> options)
         : base(options)

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +21,23 @@ public class TodoController : ControllerBase
     }
 
     [HttpGet()]
+    [Authorize]
     public async Task<IEnumerable<TodoItemGetDto>> Get()
     {
-        var data = await _context.TodoItems.ToListAsync();
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        var data = await _context.TodoItems.Where(c => c.UserId == userId).ToListAsync();
         return _mapper.Map<IEnumerable<TodoItemGetDto>>(data);
     }
 
     [HttpPost()]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
+    // [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(TodoItemCreateDto item)
     {
         var newTodo = _mapper.Map<TodoItem>(item);
+
+        newTodo.UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         _context.TodoItems.Add(newTodo);
         await _context.SaveChangesAsync();

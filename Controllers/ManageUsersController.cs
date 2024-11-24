@@ -23,7 +23,7 @@ public class ManageUsersController : ControllerBase
     public async Task Get()
     {
         var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var userManager = _serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = _serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
         if (!await roleManager.RoleExistsAsync("Admin"))
         {
