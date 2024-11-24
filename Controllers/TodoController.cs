@@ -27,7 +27,7 @@ public class TodoController : ControllerBase
     }
 
     [HttpPost()]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(TodoItemCreateDto item)
     {
         var newTodo = _mapper.Map<TodoItem>(item);

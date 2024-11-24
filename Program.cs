@@ -17,7 +17,8 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<MyDbContext>();
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<MyDbContext>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
