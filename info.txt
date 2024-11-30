@@ -8,9 +8,8 @@
 [*] identify users for todos
 [*] add custom field to User
 [*] repository
-
-[] service
-[] injection | all types of injection
+[*] service
+[*] injection | all types of injection
 
 [] advanced ef
 [] advanced C#
