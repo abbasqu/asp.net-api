@@ -4,90 +4,96 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using test_api_dotnet.Models;
+using test_api_dotnet.Services;
 
 namespace test_api_dotnet.Controllers;
 
 [ApiController]
 [Route("todo")]
+[Authorize]
 public class TodoController : ControllerBase
 {
-    private readonly MyDbContext _context;
-    private readonly IRepository<TodoItem> _repoTodoItem;
-    private readonly IMapper _mapper;
+    private readonly ITodoItemService _todoItemService;
 
-    public TodoController(MyDbContext context, IMapper mapper, IRepository<TodoItem> repoTodoItem)
+    public TodoController(ITodoItemService todoItemService)
     {
-        _context = context;
-        _mapper = mapper;
-        _repoTodoItem = repoTodoItem;
+        _todoItemService = todoItemService;
     }
 
     [HttpGet()]
-    [Authorize]
     public async Task<IEnumerable<TodoItemGetDto>> Get()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+        //v1
         //var data = await _context.TodoItems.Where(c => c.UserId == userId).ToListAsync();
-        var data = await _repoTodoItem.FindAsync(c => c.UserId == userId);
+        //v2
+        // var data = await _repoTodoItem.FindAsync(c => c.UserId == userId);
 
-        return _mapper.Map<IEnumerable<TodoItemGetDto>>(data);
+        // v1 & v2
+        //return _mapper.Map<IEnumerable<TodoItemGetDto>>(data);
+
+        // v3
+        return await _todoItemService.GetAllAsync(userId);
     }
 
     [HttpPost()]
-    [Authorize]
     // [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create(TodoItemCreateDto item)
     {
-        var newTodo = _mapper.Map<TodoItem>(item);
+        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        newTodo.UserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        await _todoItemService.AddAsync(item, userId);
 
-        _context.TodoItems.Add(newTodo);
-        await _context.SaveChangesAsync();
         return Ok("Create");
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, TodoItemUpdateDto item)
     {
-        var todoItem = await _context.TodoItems.FirstOrDefaultAsync(c => c.Id == id);
-        if (todoItem == null)
+        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        try
+        {
+            await _todoItemService.UpdateAsync(item, id, userId);
+        }
+        catch
         {
             return NotFound();
         }
 
-        _mapper.Map(item, todoItem);
-
-        await _context.SaveChangesAsync();
         return Ok("Update");
     }
 
     [HttpPatch("{id}")]
     public async Task<IActionResult> ChangeStatus(int id, TodoItemChangeStatusDto item)
     {
-        var todoItem = await _context.TodoItems.FirstOrDefaultAsync(c => c.Id == id);
-        if (todoItem == null)
+        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        try
+        {
+            await _todoItemService.ChangeStatusAsync(item, id, userId);
+        }
+        catch
         {
             return NotFound();
         }
-
-        _mapper.Map(item, todoItem);
-
-        await _context.SaveChangesAsync();
         return Ok("ChangeStatus");
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var todoItem = await _context.TodoItems.FirstOrDefaultAsync(c => c.Id == id);
-        if (todoItem == null)
+        string? userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        try
+        {
+            await _todoItemService.RemoveAsync(id, userId);
+        }
+        catch
         {
             return NotFound();
         }
-        _context.TodoItems.Remove(todoItem);
-        await _context.SaveChangesAsync();
+
         return Ok("Delete");
     }
 }
