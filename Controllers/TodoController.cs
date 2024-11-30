@@ -12,12 +12,14 @@ namespace test_api_dotnet.Controllers;
 public class TodoController : ControllerBase
 {
     private readonly MyDbContext _context;
+    private readonly IRepository<TodoItem> _repoTodoItem;
     private readonly IMapper _mapper;
 
-    public TodoController(MyDbContext context, IMapper mapper)
+    public TodoController(MyDbContext context, IMapper mapper, IRepository<TodoItem> repoTodoItem)
     {
         _context = context;
         _mapper = mapper;
+        _repoTodoItem = repoTodoItem;
     }
 
     [HttpGet()]
@@ -26,7 +28,9 @@ public class TodoController : ControllerBase
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        var data = await _context.TodoItems.Where(c => c.UserId == userId).ToListAsync();
+        //var data = await _context.TodoItems.Where(c => c.UserId == userId).ToListAsync();
+        var data = await _repoTodoItem.FindAsync(c => c.UserId == userId);
+
         return _mapper.Map<IEnumerable<TodoItemGetDto>>(data);
     }
 
