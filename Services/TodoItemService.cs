@@ -45,13 +45,13 @@ public class TodoItemService : ITodoItemService
 
     public async Task<IEnumerable<TodoItemGetDto>> GetAllAsync(string? userId)
     {
-        var data = await _todoItemRepository.FindAsync(c => c.UserId == userId);
+        var data = await _todoItemRepository.ListAsync(c => c.UserId == userId);
         return _mapper.Map<IEnumerable<TodoItemGetDto>>(data);
     }
 
     public async Task<TodoItem?> GetAsync(string? userId, int itemId)
     {
-        var item = await _todoItemRepository.GetOneAsync(c => c.Id == itemId && c.UserId == userId);
+        var item = await _todoItemRepository.FirstOrDefaultAsync(c => c.Id == itemId && c.UserId == userId);
 
         if (item == null)
         {
@@ -63,7 +63,7 @@ public class TodoItemService : ITodoItemService
 
     public async Task UpdateAsync(TodoItemUpdateDto itemDto, int itemId, string? userId)
     {
-        var item = await _todoItemRepository.GetOneAsync(c => c.Id == itemId && c.UserId == userId);
+        var item = await _todoItemRepository.FirstOrDefaultAsync(c => c.Id == itemId && c.UserId == userId);
 
         if (item == null)
         {
@@ -76,7 +76,7 @@ public class TodoItemService : ITodoItemService
 
     public async Task ChangeStatusAsync(TodoItemChangeStatusDto itemDto, int itemId, string? userId)
     {
-        var item = await _todoItemRepository.GetOneAsync(c => c.Id == itemId && c.UserId == userId);
+        var item = await _todoItemRepository.FirstOrDefaultAsync(c => c.Id == itemId && c.UserId == userId);
 
         if (item == null)
         {
@@ -89,7 +89,7 @@ public class TodoItemService : ITodoItemService
 
     public async Task RemoveAsync(int itemId, string? userId)
     {
-        var item = await _todoItemRepository.GetOneAsync(c => c.Id == itemId && c.UserId == userId);
+        var item = await _todoItemRepository.FirstOrDefaultAsync(c => c.Id == itemId && c.UserId == userId);
 
         if (item == null)
         {
