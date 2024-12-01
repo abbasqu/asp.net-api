@@ -11,9 +11,15 @@
 [*] service
 [*] injection
 
-[] refactor code & files and folders
-[] improve repository
-[] advanced ef
+[*] refactor code & files and folders
+[*] improve repository
+[*] advanced ef
+   [*] queryable
+   [*] include
+   [*] count
+   [*] any
+   [*] asNoTracking
+
 [] advanced C#
 [] all types of injection
 
