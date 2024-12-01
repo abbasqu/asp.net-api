@@ -9,14 +9,17 @@
 [*] add custom field to User
 [*] repository
 [*] service
-[*] injection | all types of injection
+[*] injection
 
+[] refactor code & files and folders
+[] improve repository
 [] advanced ef
 [] advanced C#
+[] all types of injection
 
 unit of work
-clean architecture
-docker
 solid & oop
 design patterns
 unit test
+docker
+clean architecture
