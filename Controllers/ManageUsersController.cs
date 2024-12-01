@@ -32,6 +32,10 @@ public class ManageUsersController : ControllerBase
         }
 
         var user = await userManager.FindByEmailAsync("sareh@gmail.com");
-        await userManager.AddToRoleAsync(user, "Admin");
+
+        if (user != null)
+        {
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
     }
 }
