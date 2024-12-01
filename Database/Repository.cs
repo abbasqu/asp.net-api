@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using test_api_dotnet.Models;
+
+namespace test_api_dotnet.Database;
 
 public class Repository<T> : IRepository<T> where T : class
 {

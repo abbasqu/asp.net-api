@@ -1,4 +1,4 @@
-namespace test_api_dotnet;
+namespace test_api_dotnet.Models;
 
 public class WeatherForecast
 {
@@ -11,3 +11,4 @@ public class WeatherForecast
     public string? Summary { get; set; }
     public int Age { get; set; }
 }
+

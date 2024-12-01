@@ -2,6 +2,8 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using test_api_dotnet.Database;
+using test_api_dotnet.MapperProfiles;
 using test_api_dotnet.Models;
 using test_api_dotnet.Services;
 

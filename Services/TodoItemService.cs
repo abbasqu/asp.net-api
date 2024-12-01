@@ -1,5 +1,6 @@
 using AutoMapper;
 using test_api_dotnet.Controllers;
+using test_api_dotnet.Database;
 using test_api_dotnet.Models;
 
 namespace test_api_dotnet.Services;

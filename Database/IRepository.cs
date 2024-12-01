@@ -1,5 +1,7 @@
 using System.Linq.Expressions;
 
+namespace test_api_dotnet.Database;
+
 public interface IRepository<T> where T : class
 {
     Task<T?> GetOneAsync(Expression<Func<T, bool>> predicate);

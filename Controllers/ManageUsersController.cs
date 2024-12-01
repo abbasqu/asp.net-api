@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using test_api_dotnet.Database;
 using test_api_dotnet.Models;
 
 namespace test_api_dotnet.Controllers;
