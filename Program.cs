@@ -13,7 +13,7 @@ builder.Services.AddDbContext<MyDbContext>(opt =>
     opt.UseSqlite($"Data Source={AppContext.BaseDirectory}TodoList.db"));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped(typeof(ITodoItemService), typeof(TodoItemService));
+builder.Services.AddScoped(typeof(TodoItemService));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -50,8 +50,6 @@ builder.Services.AddSwaggerGen(c =>
             new List<string>()
           }
         });
-
-
 });
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

@@ -13,9 +13,9 @@ namespace test_api_dotnet.Controllers;
 [Authorize]
 public class TodoController : ControllerBase
 {
-    private readonly ITodoItemService _todoItemService;
+    private readonly TodoItemService _todoItemService;
 
-    public TodoController(ITodoItemService todoItemService)
+    public TodoController(TodoItemService todoItemService)
     {
         _todoItemService = todoItemService;
     }

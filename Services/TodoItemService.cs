@@ -5,22 +5,22 @@ using test_api_dotnet.Models;
 
 namespace test_api_dotnet.Services;
 
-public interface ITodoItemService
-{
-    Task<IEnumerable<TodoItemGetDto>> GetAllAsync(string? userId);
+// public interface ITodoItemService
+// {
+//     Task<IEnumerable<TodoItemGetDto>> GetAllAsync(string? userId);
 
-    Task<TodoItem?> GetAsync(string? userId, int itemId);
+//     Task<TodoItem?> GetAsync(string? userId, int itemId);
 
-    Task AddAsync(TodoItemCreateDto item, string? userId);
+//     Task AddAsync(TodoItemCreateDto item, string? userId);
 
-    Task UpdateAsync(TodoItemUpdateDto itemDto, int itemId, string? userId);
+//     Task UpdateAsync(TodoItemUpdateDto itemDto, int itemId, string? userId);
 
-    Task ChangeStatusAsync(TodoItemChangeStatusDto itemDto, int itemId, string? userId);
+//     Task ChangeStatusAsync(TodoItemChangeStatusDto itemDto, int itemId, string? userId);
 
-    Task RemoveAsync(int itemId, string? userId);
-}
+//     Task RemoveAsync(int itemId, string? userId);
+// }
 
-public class TodoItemService : ITodoItemService
+public class TodoItemService
 {
     private readonly IRepository<TodoItem> _todoItemRepository;
     private readonly IMapper _mapper;
