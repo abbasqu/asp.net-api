@@ -13,4 +13,23 @@ public class MyDbContext : IdentityDbContext<AppUser>
     }
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
+    public DbSet<Payment> Payments { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<Payment>()
+            .Property(p => p.Price)
+            .HasPrecision(18, 2);
+
+        builder.Entity<Payment>()
+            .HasOne(p => p.User)
+            .WithMany(u => u.Payments)
+            .HasForeignKey(p => p.UserId)
+            .IsRequired();
+
+        
+
+    }
 }

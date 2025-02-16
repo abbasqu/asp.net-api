@@ -14,6 +14,7 @@ builder.Services.AddDbContext<MyDbContext>(opt =>
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(TodoItemService));
+builder.Services.AddScoped(typeof(PaymentService));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
