@@ -24,10 +24,17 @@ namespace test_api_dotnet.Services
 
         public async Task<PaymentDto> AddAsync(CreatePaymentDto dto, string userId)
         {
+            // First verify that the bank exists
+            var bank = await _context.Banks.FindAsync(dto.BankId);
+            if (bank == null)
+                throw new KeyNotFoundException($"Bank with ID {dto.BankId} not found");
+
             var payment = _mapper.Map<Payment>(dto);
             payment.CreatedAt = DateTime.UtcNow;
             payment.Status = PaymentStatus.Pending;
             payment.UserId = userId;
+            payment.BankId = dto.BankId;  // Set the bank ID
+
             await _repository.AddAsync(payment);
             await _context.SaveChangesAsync();
 

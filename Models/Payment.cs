@@ -12,5 +12,8 @@ namespace test_api_dotnet.Models
 
         public string UserId { get; set; } = null!;
         public virtual AppUser User { get; set; } = null!;
+
+        public int BankId { get; set; }
+        public Bank Bank { get; set; } = null!;
     }
 } 

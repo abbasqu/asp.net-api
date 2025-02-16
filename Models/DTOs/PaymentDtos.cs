@@ -5,13 +5,14 @@ namespace test_api_dotnet.Models.DTOs
     public class CreatePaymentDto
     {
         public decimal Price { get; set; }
-        public string ReferenceCode { get; set; }
+        public string ReferenceCode { get; set; } = null!;
+        public int BankId { get; set; }
     }
 
     public class UpdatePaymentDto
     {
         public decimal Price { get; set; }
-        public string ReferenceCode { get; set; }
+        public string ReferenceCode { get; set; }= null!;
     }
 
     public class ChangePaymentStatusDto
@@ -26,6 +27,6 @@ namespace test_api_dotnet.Models.DTOs
         public decimal Price { get; set; }
         public PaymentStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string ReferenceCode { get; set; }
+        public string ReferenceCode { get; set; }= null!;
     }
 } 

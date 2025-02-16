@@ -14,6 +14,7 @@ public class MyDbContext : IdentityDbContext<AppUser>
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
     public DbSet<Payment> Payments { get; set; } = null!;
+    public DbSet<Bank> Banks { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -29,7 +30,10 @@ public class MyDbContext : IdentityDbContext<AppUser>
             .HasForeignKey(p => p.UserId)
             .IsRequired();
 
-        
-
+        builder.Entity<Payment>()
+            .HasOne(p => p.Bank)
+            .WithMany(u => u.Payments)
+            .HasForeignKey(p => p.BankId)
+            .IsRequired();
     }
 }

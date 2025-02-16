@@ -18,5 +18,10 @@ public class MappingProfile : Profile
         CreateMap<Payment, UpdatePaymentDto>().ReverseMap();
         CreateMap<Payment, ChangePaymentStatusDto>().ReverseMap();
         CreateMap<Payment, PaymentDto>().ReverseMap();
+
+
+        CreateMap<Bank, BankDto>();
+        CreateMap<CreateBankDto, Bank>();
+        CreateMap<UpdateBankDto, Bank>();
     }
 }
