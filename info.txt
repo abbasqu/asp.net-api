@@ -29,3 +29,8 @@ design patterns
 unit test
 docker
 clean architecture
+
+{
+  "email": "email@mail.com",
+  "password": "Password1!"
+}
